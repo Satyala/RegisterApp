@@ -6,6 +6,7 @@ using RegisterApp.Models;
 using RegisterApp.Models.APIModels;
 using RegisterApp.Models.Entities;
 using System.Collections.Generic;
+using FluentValidation.TestHelper;
 
 namespace RegisterApp.Tests
 {
@@ -49,7 +50,7 @@ namespace RegisterApp.Tests
         }
 
         [Test]
-        public void ValidateEmail_NotValid()
+        public void Validate_CustomerRequest_NotValid()
         {
             var customerRepoMock = new Mock<ICustomerRepository>();
             customerRepoMock.Setup(m => m.GetAll()).Returns(customers).Verifiable();
@@ -75,7 +76,27 @@ namespace RegisterApp.Tests
 
         }
 
-        //Further tests ion fluent API itself
+        [Test]
+        [TestCase("XX-123456")]
+        public void Validate_PolicyNumber_Valid(string policynumber)
+        {
+            var customerValidator = new CustomerRequestValidator();
+
+            customerValidator.ShouldNotHaveValidationErrorFor(a => a.PolicyReferenceNumber, new CustomerRequest { PolicyReferenceNumber = policynumber });
+        }
+
+
+        [Test]
+        [TestCase("X-123456")]
+        [TestCase("XX-AB12345")]
+        public void Validate_PolicyNumber_NotValid(string policynumber)
+        {
+            var customerValidator = new CustomerRequestValidator();
+
+            customerValidator.ShouldHaveValidationErrorFor(a => a.PolicyReferenceNumber, new CustomerRequest { PolicyReferenceNumber = policynumber });
+        }
+
+        //Further tests on fluent API itself
 
         //Valid / not valid Email and DOB Either tests
 
