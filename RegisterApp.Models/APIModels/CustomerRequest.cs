@@ -96,7 +96,7 @@ namespace RegisterApp.Models.APIModels
         /// <returns></returns>
         private bool ValidateDOBNoEmail(CustomerRequest cusotmerRequest)
         {
-            if (string.IsNullOrWhiteSpace(cusotmerRequest.EmailAddress))
+            if (!string.IsNullOrWhiteSpace(cusotmerRequest.EmailAddress))
             {
                 return false;
             }
