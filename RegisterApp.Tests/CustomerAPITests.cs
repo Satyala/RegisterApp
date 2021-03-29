@@ -19,12 +19,13 @@ namespace RegisterApp.Tests
         {
         }
 
-        [Test]        
+        [Test]
         public void ValidateCusotmerRequest_Valid()
         {
 
             var customerRepoMock = new Mock<ICustomerRepository>();
             customerRepoMock.Setup(m => m.GetAll()).Returns(customers).Verifiable();
+            customerRepoMock.Setup(m => m.Insert(It.IsAny<CustomerTable>())).Returns(new CustomerTable { CustomerID = 12 });
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
             unitOfWorkMock.Setup(m => m.CustomerRepository).Returns(customerRepoMock.Object);
