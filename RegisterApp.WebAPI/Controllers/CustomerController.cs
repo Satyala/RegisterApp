@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RegisterApp.BLL.Services;
-using RegisterApp.Models;
 using RegisterApp.Models.APIModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RegisterApp.WebAPI.Controllers
 {
     [ApiController]
-    [Route("/v1/Customer")]
+    [Route("/api/v1/Customer")]
     public class CustomerController : ControllerBase
     {
         private ICustomerService _customerService { get; set; }
@@ -31,24 +29,35 @@ namespace RegisterApp.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public CustomerResponse Register(CustomerRequest request)
+        [Route("Register")]
+        public async Task<IActionResult> Register(CustomerRequest request)
         {
             try
             {
-                return _customerService.RegisterCustomer(request);
+                CustomerRequestValidator validator = new CustomerRequestValidator();
+                var vresult = validator.Validate(request);
+                if (vresult.IsValid)
+                {
+                    var result = await _customerService.RegisterCustomer(request);
+                    if (result.CustomerID > 0)
+                    {
+                        return Ok(result.CustomerID);
+                    }
+                    else
+                    {
+                        return BadRequest(0);
+                    }
+                }
+                else
+                {
+                    return BadRequest(-1);
+                }
             }
             catch (Exception ex)
             {
-
                 _logger.LogError(ex, "Un expected error");
-
-                var message = new CustomerResponse();
-                message.Message.RequestStatus = CustomerModelContants.FailedMessageStatus;
-                message.Message.ErrorMessage.Add("Unexpected Error");
-
-                return message;
+                return StatusCode(StatusCodes.Status500InternalServerError, -2);
             }
-
         }
     }
 }

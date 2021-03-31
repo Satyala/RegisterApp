@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RegisterApp.BLL.Repositories
 {
@@ -11,6 +12,6 @@ namespace RegisterApp.BLL.Repositories
     {
         ICustomerRepository CustomerRepository { get; }
 
-        void Save();
+        Task<int> Save();
     }
 }

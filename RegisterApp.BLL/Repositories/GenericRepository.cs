@@ -2,6 +2,7 @@
 using RegisterApp.DAL;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace RegisterApp.BLL.Repositories
 {
@@ -24,9 +25,9 @@ namespace RegisterApp.BLL.Repositories
         /// List all
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return table.ToList();
+            return await table.ToListAsync();
         }
 
         /// <summary>
@@ -34,19 +35,24 @@ namespace RegisterApp.BLL.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T GetById(object id)
+        public async Task<T> GetById(object id)
         {
-            return table.Find(id);
+            return await table.FindAsync(id);
         }
 
         /// <summary>
         /// Add entity
         /// </summary>
         /// <param name="obj"></param>
-        public T Insert(T obj)
+        public async Task<T> Insert(T obj)
         {
-            var entity = table.Add(obj);
-            return entity.Entity;
+            var result = await Task.Run(() =>
+            {
+                var entity = table.AddAsync(obj);
+                return entity.Result.Entity;
+            });
+
+            return result;            
         }
 
         /// <summary>

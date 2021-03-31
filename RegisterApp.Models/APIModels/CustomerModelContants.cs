@@ -17,9 +17,9 @@ namespace RegisterApp.Models
         public const string SurName = "Check SurName. Should be between 3 and 50";
 
         public const string PolicyReferenceNUmber = "Check policy number format XX-999999";
-        public const string DOB = "Check DOB. Should be atleast 18 years old or Valid Email";
+        public const string DOB = "Check DOB. Should be atleast 18 years old";
         
-        public const string EmailAddress = "Check at leat 4 characters follwed by @ and 2 characters. End in either .com or .co.uk or Valid DOB";
+        public const string EmailAddress = "Check at leat 4 characters follwed by @ and 2 characters. End in either .com or .co.uk";
 
         
     }

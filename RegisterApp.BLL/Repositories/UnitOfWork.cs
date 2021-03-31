@@ -1,7 +1,5 @@
 ﻿using RegisterApp.DAL;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace RegisterApp.BLL.Repositories
 {
@@ -22,9 +20,9 @@ namespace RegisterApp.BLL.Repositories
             }
         }
 
-        public void Save()
+        public async Task<int> Save()
         {
-            this.context.SaveChanges();
+            return await this.context.SaveChangesAsync();
         }
     }
 }

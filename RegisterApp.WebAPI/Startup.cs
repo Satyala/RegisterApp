@@ -40,8 +40,8 @@ namespace RegisterApp.WebAPI
 
             //Services
             services.AddScoped<ICustomerService, CustomerService>();
-           
-            services.AddControllers().AddFluentValidation(); 
+
+            services.AddControllers().AddFluentValidation();
 
             services.AddSwaggerGen();
         }

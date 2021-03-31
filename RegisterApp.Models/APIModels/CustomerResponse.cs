@@ -6,17 +6,10 @@ using System.Text;
 namespace RegisterApp.Models.APIModels
 {
     /// <summary>
-    /// API Response for Customer Request. Message will have the status on the api processing status and error if failed.
+    /// API Response for Customer Request.
     /// </summary>
     public class CustomerResponse
-    {
-        public CustomerResponse()
-        {
-            Message = new APIReqeustStatus();
-        }
+    {    
         public int CustomerID { get; set; }
-
-        public APIReqeustStatus Message { get; set; }
-
     }
 }

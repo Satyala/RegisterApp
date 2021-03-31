@@ -1,12 +1,10 @@
 ﻿using RegisterApp.Models.APIModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace RegisterApp.BLL.Services
 {
     public interface ICustomerService
     {
-        CustomerResponse RegisterCustomer(CustomerRequest customer);
+        Task<CustomerResponse> RegisterCustomer(CustomerRequest customer);
     }
 }

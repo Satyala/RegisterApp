@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RegisterApp.BLL.Repositories
 {
@@ -8,10 +9,10 @@ namespace RegisterApp.BLL.Repositories
     /// <typeparam name="T"></typeparam>
     public interface IGenericRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T GetById(object id);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> GetById(object id);
 
-        T Insert(T obj);
+        Task<T> Insert(T obj);
 
         void Update(T obj);
 
